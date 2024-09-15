@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Result Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            width: 500px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .result {
+            margin-top: 20px;
+            background-color: #e0f7e0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .topper {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #000;
+        }
+        .photo {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .photo img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>ITI Result Checker</h2>
+    <div class="form-group">
+        <label for="adminNumber">Admin Number (Hall Ticket)</label>
+        <input type="text" id="adminNumber" placeholder="Enter Admin Number">
+    </div>
+    
+    <div class="form-group">
+        <label for="year">Select Year</label>
+        <select id="year">
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+        </select>
+    </div>
+
+    <button class="btn" onclick="checkResult()">Check Result</button>
+
+    <div id="resultDisplay" class="result" style="display:none;">
+        <h3>Result for <strong><span id="studentName"></span></strong></h3>
+        <p>Admin Number: <span id="adminResult"></span> | Year: <span id="yearResult"></span></p>
+        
+        <div class="photo">
+            <img id="studentPhoto" src="" alt="Student Photo">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Maximum Marks</th>
+                    <th>Marks Obtained</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Theory</td>
+                    <td>76</td>
+                    <td><span id="theoryMarks"></span></td>
+                </tr>
+                <tr>
+                    <td>Engineering Drawing</td>
+                    <td>12</td>
+                    <td><span id="engineeringMarks"></span></td>
+                </tr>
+                <tr>
+                    <td>Workshop Calculations</td>
+                    <td>12</td>
+                    <td><span id="workshopMarks"></span></td>
+                </tr>
+                <tr>
+                    <td>Employability Skills</td>
+                    <td>50</td>
+                    <td><span id="employabilityMarks"></span></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th>150</th>
+                    <th><span id="totalMarks"></span></th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="topper" id="topperMessage">
+            <p></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkResult() {
+        const adminNumber = document.getElementById('adminNumber').value;
+        const year = document.getElementById('year').value;
+
+        let resultData;
+        let studentName;
+        let studentPhoto;
+        let topperMessage = "";
+
+        if (adminNumber === "00230836002900") {
+            // Student: Sonnaila Mahesh, Full Marks 150/150
+            studentName = "Sonnaila Mahesh";
+            studentPhoto = "mahesh.jfif"; // Update with actual photo path
+            resultData = {
+                theory: 76,
+                engineering: 12,
+                workshop: 12,
+                employability: 50,
+                total: 150
+            };
+            topperMessage = "Topper of the Year from Vedha ITI";
+        } else if (adminNumber === "00230836011629") {
+            // Student: Sonnaila Sandeep Kumar, Total 142/150
+            studentName = "Sonnaila Sandeep Kumar";
+            studentPhoto = "sandeep.jfif"; // Update with actual photo path
+            resultData = {
+                theory: 72, // Example calculation: less marks in theory
+                engineering: 12,
+                workshop: 10,
+                employability: 48,
+                total: 142
+            };
+        } else {
+            alert("Invalid Admin Number.");
+            return;
+        }
+
+        // Display the results
+        document.getElementById('studentName').innerText = studentName;
+        document.getElementById('adminResult').innerText = adminNumber;
+        document.getElementById('yearResult').innerText = year;
+
+        document.getElementById('theoryMarks').innerText = resultData.theory;
+        document.getElementById('engineeringMarks').innerText = resultData.engineering;
+        document.getElementById('workshopMarks').innerText = resultData.workshop;
+        document.getElementById('employabilityMarks').innerText = resultData.employability;
+        document.getElementById('totalMarks').innerText = resultData.total + " / 150";
+
+        document.getElementById('studentPhoto').src = studentPhoto;
+
+        document.getElementById('topperMessage').innerHTML = topperMessage ? `<p>${topperMessage}</p>` : "";
+
+        document.getElementById('resultDisplay').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
